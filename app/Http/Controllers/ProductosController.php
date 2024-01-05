@@ -12,7 +12,9 @@ class ProductosController extends Controller
      */
     public function index()
     {
-        //
+        $productos = Productos::all();
+        return response()->json(['productos' => $productos]);
+
     }
 
     /**
@@ -28,7 +30,19 @@ class ProductosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $productos = new Productos();
+        $productos->nombreProducto = $request->nombreProducto;
+        $productos->stock = $request->stock;
+        $productos->stockMinimo = $request->stockMinimo;
+        $productos->marca = $request->marca;
+        $productos->costo = $request->costo;
+        $productos->precio = $request->precio;
+        $productos->fecha = $request->fecha;
+        $productos->img = $request->img;
+        $productos->categoria = $request->categoria;
+        $productos->save();
+
+        return response()->json(['message' => 'Producto creado correctamente']);
     }
 
     /**
@@ -50,16 +64,32 @@ class ProductosController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Productos $productos)
+    public function update(Request $request, $id)
     {
-        //
+        $productos = Productos::find($id);
+        $productos->nombreProducto = $request->nombreProducto;
+        $productos->stock = $request->stock;
+        $productos->stockMinimo = $request->stockMinimo;
+        $productos->marca = $request->marca;
+        $productos->costo = $request->costo;
+        $productos->precio = $request->precio;
+        $productos->fecha = $request->fecha;
+        $productos->img = $request->img;
+        $productos->categoria = $request->categoria;
+        $productos->save();
+
+        return response()->json(['message' => 'Producto actualizado correctamente']);
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Productos $productos)
+    public function destroy($id)
     {
-        //
+        $productos = Productos::find($id);
+        $productos->delete();
+
+        return response()->json(['message' => 'Producto eliminado correctamente']);
     }
 }
