@@ -12,7 +12,7 @@ class ProductosController extends Controller
      */
     public function index()
     {
-        //
+        return Productos::all();
     }
 
     /**
@@ -28,7 +28,17 @@ class ProductosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $productos = new Productos();
+        $productos -> nombreProducto = $request -> nombreProducto;
+        $productos -> stock = $request -> stock;
+        $productos -> stockMinimo = $request -> stockMinimo;
+        $productos -> marca = $request -> marca;
+        $productos -> costo = $request -> costo;
+        $productos -> precio = $request -> precio;
+        $productos -> fecha = $request -> fecha;
+        $productos -> img = $request -> img;
+        $productos -> categoria = $request -> categoria;
+        $productos -> save();
     }
 
     /**
@@ -50,9 +60,18 @@ class ProductosController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Productos $productos)
+    public function update(Request $request, $nombreProducto)
     {
-        //
+        $productos =  Productos::find($nombreProducto);
+        $productos -> stock = $request -> stock;
+        $productos -> stockMinimo = $request -> stockMinimo;
+        $productos -> marca = $request -> marca;
+        $productos -> costo = $request -> costo;
+        $productos -> precio = $request -> precio;
+        $productos -> fecha = $request -> fecha;
+        $productos -> img = $request -> img;
+        $productos -> categoria = $request -> categoria;
+        $productos -> save();
     }
 
     /**

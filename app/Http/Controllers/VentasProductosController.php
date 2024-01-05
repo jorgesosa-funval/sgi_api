@@ -12,7 +12,7 @@ class VentasProductosController extends Controller
      */
     public function index()
     {
-        //
+        return VentasProductos::all();
     }
 
     /**
@@ -28,7 +28,15 @@ class VentasProductosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $ventasp = new VentasProductos();
+        $ventasp -> venta_id = $request -> venta_id;
+        $ventasp -> producto_id = $request -> producto_id;
+        $ventasp -> precio = $request -> precio;
+        $ventasp -> costo = $request -> costo;
+        $ventasp -> cantidadVendida = $request -> cantidadVendida;
+        $ventasp -> total = $request -> total;
+        $ventasp -> fechaVenta = $request -> fechaVenta;
+        $ventasp -> save();
     }
 
     /**
@@ -50,16 +58,24 @@ class VentasProductosController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, VentasProductos $ventasProductos)
+    public function update(Request $request, $venta_id)
     {
-        //
+        $ventasp =  VentasProductos::find($venta_id);
+        $ventasp -> producto_id = $request -> producto_id;
+        $ventasp -> precio = $request -> precio;
+        $ventasp -> costo = $request -> costo;
+        $ventasp -> cantidadVendida = $request -> cantidadVendida;
+        $ventasp -> total = $request -> total;
+        $ventasp -> fechaVenta = $request -> fechaVenta;
+        $ventasp -> save();
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(VentasProductos $ventasProductos)
+    public function destroy($venta_id)
     {
-        //
+        $ventasp = VentasProductos::find($venta_id);
+        $ventasp ->delete();
     }
 }
