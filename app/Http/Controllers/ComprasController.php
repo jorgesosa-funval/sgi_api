@@ -12,7 +12,7 @@ class ComprasController extends Controller
      */
     public function index()
     {
-        //
+        return Compras::all();
     }
 
     /**
@@ -28,15 +28,28 @@ class ComprasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->cliente && $request->fechaCompra && $request->cantidadCompra && $request->totalPagado && $request->cantidadArticulos) {
+                $compras = new Compras();
+                $compras->user_id = $request->cliente;
+                $compras->fechaCompra = $request->fechaCompra;
+                $compras->antidadCompra = $request->cantidadCompra;
+                $compras->totalPagado = $request->totalPagado;
+                $compras->cantidadArticulos = $request->cantidadArticulos;
+                $compras->save();
+                return "La compra se guardo correctamente";
+        }
+        return "Es nesesario ingresar un valor a todos los campos, para ser registrar una compra.";
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Compras $compras)
+    public function show($id)
     {
-        //
+        if (Compras::find($id) == null) {
+            return "No existe el Compras con el id N° " . $id;
+        }
+        return Compras::find($id);
     }
 
     /**

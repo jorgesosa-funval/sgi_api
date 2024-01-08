@@ -55,6 +55,20 @@ Route::controller(VentasController::class)->group(function(){
     Route::delete('/ventas/{user_id}','destroy');
 });
 
+Route::controller(ComprasController::class)->group(function(){
+    Route::get('/compras','index');
+    Route::post('/compras','store');
+    Route::put('/compras/{user_id}','update');
+    Route::delete('/compras/{user_id}','destroy');
+});
+
+Route::controller(ComprasProductosController::class)->group(function(){
+    Route::get('/comprasproduct','index');
+    Route::post('/comprasproduct','store');
+    Route::put('/comprasproduct/{user_id}','update');
+    Route::delete('/comprasproduct/{user_id}','destroy');
+});
+
 Route::controller(VentasProductosController::class)->group(function(){
     Route::get('/productosventas','index');
     Route::post('/productosventas','store');
