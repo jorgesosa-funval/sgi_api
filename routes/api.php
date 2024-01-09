@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\ComprasController;
 use App\Http\Controllers\ComprasProductosController;
 use App\Http\Controllers\ProductosController;
@@ -7,6 +8,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\VentasController;
 use App\Http\Controllers\VentasProductosController;
+use Illuminate\Auth\Events\Login;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,8 +23,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::post('/login', function(Request $request){
+  $credentials = $request->only(['email', 'password']);
+  if(!$token = auth()->attempt($credentials)){
+    abort(401, 'No Autorizado');
+  }
+  return response()->json([
+    'data' => [
+        'token' => $token,
+        'token_type' => 'bearer',
+        'expires_in' => auth()->factory()->getTTL() * 60
+    ]
+  ]);
 });
 
 Route::controller(UsersController::class)->group(function(){
